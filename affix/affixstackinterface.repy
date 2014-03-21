@@ -153,18 +153,7 @@ class AffixStackInterface:
     # Set the instance variables
     self._stack_str = stack_str
     self._virtual_host_name = virtual_host_name
-
-    
-    
-
-  def getmyip(self):
-    """
-    Return the virtual host name that is associated with this connection. 
-    It could be some random key or server name set by the user when the
-    ShimStackInterface object was initialized or the local ip address if
-    the user did not set the virtual host name.
-    """
-    return self._virtual_host_name
+    self.affix_stack = AffixStack(self._stack_str, self._virtual_host_name)
 
 
 
@@ -181,28 +170,28 @@ class AffixStackInterface:
   # https://seattle.poly.edu/wiki/RepyV2API
   # ...........................................................................
 
+  def getmyip(self):
+    return self.affix_stack.peek().getmyip()
+
+
+
   def sendmessage(self, destip, destport, message, localip, localport):
-    affix_stack = AffixStack(self._stack_str, self._virtual_host_name)
-    return affix_stack.peek().sendmessage(destip, destport, message, localip, localport)
+    return self.affix_stack.peek().sendmessage(destip, destport, message, localip, localport)
 
 
 
   def openconnection(self, destip, destport, localip, localport, timeout):
-    affix_stack = AffixStack(self._stack_str, self._virtual_host_name)
-    return affix_stack.peek().openconnection(destip, destport, localip, localport, timeout)
+    return self.affix_stack.peek().openconnection(destip, destport, localip, localport, timeout)
 
 
 
   def listenformessage(self, localip, localport):
-    affix_stack = AffixStack(self._stack_str, self._virtual_host_name)
-
-    return affix_stack.peek().listenformessage(localip, localport)
+    return self.affix_stack.peek().listenformessage(localip, localport)
 
 
 
   def listenforconnection(self, localip, localport):
-    affix_stack = AffixStack(self._stack_str, self._virtual_host_name)
-    return affix_stack.peek().listenforconnection(localip, localport)
+     return self.affix_stack.peek().listenforconnection(localip, localport)
 
 
   # ............................................................................

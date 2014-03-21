@@ -243,6 +243,11 @@ class BaseAffix:
   # them.
   # ===========================================================================
 
+  def getmyip(self):
+    return self.peek().getmyip()
+
+
+
   def sendmessage(self, destip, destport, message, localip, localport):
     return self.peek().sendmessage(destip, destport, message, localip, localport)
 
