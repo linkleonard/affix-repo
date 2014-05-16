@@ -315,6 +315,9 @@ class NatPunchAffix(BaseAffix):
 
     for localport in possible_ports:
       try:
+        # Edge case where forwarder is running on the same machine
+        if (forwarder_ip, forwarder_port) == (getmyip(), localport):
+          continue
         log(getruntime(), self, "Trying to connect_available_client using", forwarder_ip, 
           forwarder_port, getmyip(), localport, "\n")
 	new_sockobj = openconnection(forwarder_ip, forwarder_port, getmyip(), localport, _NAT_AFFIX_DEFAULT_TIMEOUT)
